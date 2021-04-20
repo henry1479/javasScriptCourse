@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // создаем div с классом desk
+    // он будет контейнером шахматной доски
+    const desk = document.createElement('div');
+    document.body.appendChild(desk);
+    desk.classList.add('desk');
+    desk.style.border = '1px solid brown';
+    desk.style.width = 'fit-content';
+
+    // генерирует шахматную доску
+    // принимает количество рядов и клеток в них
+    function getCheseDesk (rows, items) {
+        // массив с буквами
+        const letters = ['A','B','C','D','E','F','G', 'H'];
+        //создаем ряды, добавляя div cо стилями
+        for(let i = rows; i>=1; i--) {
+            let row = document.createElement('div');
+            desk.appendChild(row);
+            row.classList.add('row');
+            row.style.height = '50px';
+            row.style.display = 'flex';
+            // в рядах создаем клетки
+            for (let k = 1; k<items+1; k++) {
+                let item = document.createElement('div');
+                row.appendChild(item);
+                item.classList.add('item');
+                item.style.width = '50px';
+                // в клетки добавляем разметку
+                item.innerHTML = `${letters[k-1]} ${i}`;
+                // делаем ячейки разного цвета
+                if (i%2 !== 0 && k%2 !== 0) {
+                    item.style.background = 'brown';
+                } else if (i%2 === 0 && k%2 ===0 )
+                    item.style.background = 'brown';
+            }
+        }
+    }
+
+    getCheseDesk(8,8);
+</script>
+<script src="main.js"></script>
+</body>
+</html>
