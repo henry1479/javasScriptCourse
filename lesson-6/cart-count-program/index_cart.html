@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Cart-count program</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+	<div class="cart">
+		<p>Количество товаров в корзине: <span id="cartItems"></span></p>
+		<p>Наименование товаров в корзине: <span id="nameItems">Корзина пуста</span></p>
+		<p>Общая сумма: <span id="cartPrice"></span></p>
+		<button type='button' id='clearButton'>Очистить корзину</button>
+	</div>
+	<div class="cards-wrapper">
+		<div class="card" id="polo">
+			<img src="./img/style-1.png" alt="" class="item-img">
+			<h3 class="item-name">Polo</h3>
+			<p class="item-description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi hic incidunt
+				adipisci architecto consequuntur nostrum similique, quasi quia aut nam. Molestiae quisquam dignissimos
+				optio nostrum quaerat, magnam cum magni laboriosam.</p>
+			<span class="price">300</span>
+			<button type="button" class=item-button>Add to cart</button>
+		</div>
+		<div class="card" id="skirt">
+			<img src="./img/style-2.png" alt="" class="item-img">
+			<h3 class="item-name">Skirt</h3>
+			<p class="item-description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi hic incidunt
+				adipisci architecto consequuntur nostrum similique, quasi quia aut nam. Molestiae quisquam dignissimos
+				optio nostrum quaerat, magnam cum magni laboriosam.</p>
+			<span class="price">200</span>
+			<button type="button" class=item-button>Add to cart</button>
+		</div>
+		<div class="card" id="tShirt">
+			<img src="./img/style-3.png" alt="" class="item-img">
+			<h3 class="item-name">T-shirt</h3>
+			<p class="item-description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi hic incidunt
+				adipisci architecto consequuntur nostrum similique, quasi quia aut nam. Molestiae quisquam dignissimos
+				optio nostrum quaerat, magnam cum magni laboriosam.</p>
+			<span class="price">100</span>
+			<button type="button" class=item-button>Add to cart</button>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

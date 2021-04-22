@@ -1,0 +1,23 @@
+.cards-wrapper{
+	display: flex;
+	justify-content: space-around;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: auto;
+	background-color: rgb(242, 250, 255);
+	padding-bottom: 20px;
+}
+
+.item-img {
+	height: 300px;
+
+}
+
+
+.item-button {
+	width: 30%;
+}
