@@ -1,7 +1,31 @@
-var admin;
-var name;
+// var admin;
+// var name;
 
-name = 'Василий';
-admin = name;
+// name = 'Василий';
+// admin = name;
 
-alert(admin);
+// alert(admin);
+
+
+
+
+/*
+выводит последовательность чисел без использования 
+тела цикла
+
+*/
+
+for(i=1; i <= 9; console.log(i++)) {
+
+}
+
+/*
+цикл выводит последовательность х в каждой строке,
+увеличенную на один знак
+*/
+
+for(i=1; i <= 20; i++) {
+    let x = 'x';
+    console.log(x.repeat(i));
+}
+

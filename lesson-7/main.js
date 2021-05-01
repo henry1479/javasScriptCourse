@@ -25,6 +25,7 @@ const game = {
 
     points: 0,
     timer: null, // id таймера
+    pauseStatus: false,
 
     /**
      * Функция ищет HTML элемент контейнера игры на странице.
@@ -39,16 +40,24 @@ const game = {
      * Функция выполняет старт игры.
      */
     start() {
+        game.pauseStatus = false;
         game.setGameStatus(GAME_STATUS_STARTED);
-        const score = document.getElementById('score-value');
-        score.innerText = game.points; // выводит очки
+        game.displayPoints();
+        clearInterval(game.timer);
         board.clear(); // чистит поле
-        snake.parts = snake.setStartPosition();// выводит змейку в начальную позицию
+        if (game.pauseStatus) {
+            currentPosition = snake.getNextPosition();
+            snake.setPosition(currentPosition);
+        } else {
+            snake.parts = snake.setStartPosition(); // выводит змейку в начальную позицию
+        }
+        snake.setDirection(SNAKE_DIRECTION_RIGHT);// направление движение вправо
+
         board.render();
         snake.render();
         food.render();
-        snake.setDirection(SNAKE_DIRECTION_RIGHT);// направдение движение вправо
-        game.timer = setInterval(game.move, 1000); // реализует непрерывное движение       
+        
+        game.timer = setInterval(game.move, 500); // реализует непрерывное движение   
         game.changeDirection(); // меняет направления при нажатии на клавишу
         
     },
@@ -58,6 +67,8 @@ const game = {
      */
     pause() {
         game.setGameStatus(GAME_STATUS_PAUSED);
+        game.pauseStatus = true;
+        clearInterval(game.timer);
         
         /* добавить сюда код */
     },
@@ -67,14 +78,9 @@ const game = {
      */
     stop() {
         game.setGameStatus(GAME_STATUS_STOPPED);
-        clearInterval(game.timer); // по идее должна очищать таймер
+        game.displayMessageGameOver();
         board.clear(); // снова чистит поле
-        field = board.getElement();
-        message = document.createElement('p');
-        text = document.createTextNode( 'GAME OVER');
-        message.appendChild(text); 
-        message.classList.add('end-message');
-        field.appendChild(message); // выводит сообщение о конце игры
+        // выводит сообщение о конце игры
         game.points = 0; // очки в ноль
         return
     
@@ -84,10 +90,24 @@ const game = {
      * Функция прибавляет очки
      */
 
-    pointCount() {
+    increasePoints () {
         this.points += 10;
         const score = document.getElementById('score-value');
         score.innerText = this.points;
+    },
+
+    displayPoints () {
+        const score = document.getElementById('score-value');
+        score.innerText = game.points; // выводит очки
+    },
+
+    displayMessageGameOver(){
+        field = board.getElement();
+        message = document.createElement('p');
+        text = document.createTextNode( 'GAME OVER');
+        message.appendChild(text); 
+        message.classList.add('end-message');
+        field.appendChild(message);
     },
 
     /**
@@ -117,12 +137,15 @@ const game = {
                 return;
         }
 
-        const nextPosition = snake.getNextPosition();
-        snake.setDirection(direction);
-        game.move();
+        if(game.pauseStatus) {
+            return;
+        } else {
+            const nextPosition = snake.getNextPosition();
+            snake.setDirection(direction);
+            game.move();
+        }
 
-
-
+        
     },
      /**
      * Функция  двигает змейку по полю
@@ -142,9 +165,10 @@ const game = {
         /* если есть совпадения с телом, то игра прекращается */
         if(foundBody === true) {
             game.stop();
+            return
         }
         /* если найден индекс еды (то есть позиция совпадает) */
-         else if (foundFood !== -1) {
+        if (foundFood !== -1) {
             /* устанавливаем следующую позицию змейки с вторым параметром "не удалять хвост змейки",
              * змейка съев еду вырастает на одну клетку */
             snake.setPosition(nextPosition, false);
@@ -158,7 +182,7 @@ const game = {
             /* перерендериваем еду */
             food.render();
 
-            game.pointCount();
+            game.increasePoints();
         } else {
             /* если индекс не найден, то просто устанавливаем новую координату для змейки */
             snake.setPosition(nextPosition);
@@ -371,6 +395,8 @@ const snake = {
         }
 
         return position; 
+
+       
     },
 
 
