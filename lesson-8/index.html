@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Урок 8 • Замыкания</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+    <div id="game" class="game">
+        <div id="score" class="score">
+            <span id="score-value" class="value">0</span>
+        </div>
+        <div id="board" class="board"></div>
+        <div id="buttons" class="buttons">
+            <button id="button-start" class="start" type="button">Начать</button>
+            <button id="button-pause" class="pause" type="button">Пауза</button>
+            <button id="button-continue" class="continue" type="button">Продолжить</button>
+            <button id="button-stop" class="stop" type="button">Сдаться</button>
+        </div>
+<!-- 
+        if (!("a" in window)) {
+            var a = 1;
+        } 
+        alert(a);
+        Поскольку строки с буквой а нет в объекте window, вывод будет 1
+
+        var b = function a(x) {
+            x && a(--x);
+        }
+        alert(a);
+        Функция вычисляет булевское значение, к тому же в нее не переданы параметры, переменная "а" в ней никак не меняется, поэтому вывод 1
+
+        function a(x) {
+            return x * 2;
+        }
+        var a;
+        alert(a);
+        Функция не имеет никакого отношения к переменной "а", такая переменная уже есть, поэтому ее
+        новое объявление вызовет ошибку
+
+        function b(x, y, a) {
+            arguments[2] = 10;
+            alert(a);
+        }
+        b(1, 2, 3);
+        Функция выведет третий её аргумент с присвоением 10, то есть вывод будет 10
+
+        function a() {
+            alert(this);
+        }
+        a.call(null);
+        Функция вызывается с привязкой к null, это не объект, поэтому привязка к нему выдаст ошибку
+    -->
+    </div>
+</body>
+</html>
