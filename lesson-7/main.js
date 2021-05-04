@@ -40,25 +40,21 @@ const game = {
      * Функция выполняет старт игры.
      */
     start() {
-        game.pauseStatus = false;
+        clearInterval(game.timer);
         game.setGameStatus(GAME_STATUS_STARTED);
         game.displayPoints();
-        clearInterval(game.timer);
-        board.clear(); // чистит поле
-        if (game.pauseStatus) {
-            currentPosition = snake.getNextPosition();
-            snake.setPosition(currentPosition);
-        } else {
-            snake.parts = snake.setStartPosition(); // выводит змейку в начальную позицию
-        }
-        snake.setDirection(SNAKE_DIRECTION_RIGHT);// направление движение вправо
-
-        board.render();
-        snake.render();
-        food.render();
-        
         game.timer = setInterval(game.move, 500); // реализует непрерывное движение   
-        game.changeDirection(); // меняет направления при нажатии на клавишу
+        // меняет направления при нажатии на клавишу
+        board.clear(); // чистит поле
+        // выводит змейку в начальную позицию
+        snake.parts = snake.setStartPosition();
+        snake.setDirection(SNAKE_DIRECTION_RIGHT);// направление движение вправо
+        board.render();
+        food.render();
+        snake.render();
+      
+       
+        
         
     },
 
@@ -68,9 +64,13 @@ const game = {
     pause() {
         game.setGameStatus(GAME_STATUS_PAUSED);
         game.pauseStatus = true;
+        game.timer = clearInterval(game.timer);
+    },
+
+    continue(){
+        game.setGameStatus(GAME_STATUS_STARTED);
         clearInterval(game.timer);
-        
-        /* добавить сюда код */
+        game.timer = setInterval(game.move,500);
     },
 
     /**
@@ -78,12 +78,12 @@ const game = {
      */
     stop() {
         game.setGameStatus(GAME_STATUS_STOPPED);
-        game.displayMessageGameOver();
+        clearInterval(game.timer);
         board.clear(); // снова чистит поле
         // выводит сообщение о конце игры
         game.points = 0; // очки в ноль
-        return
-    
+        game.displayMessageGameOver();
+       
     },
 
     /**
@@ -137,13 +137,11 @@ const game = {
                 return;
         }
 
-        if(game.pauseStatus) {
-            return;
-        } else {
-            const nextPosition = snake.getNextPosition();
-            snake.setDirection(direction);
-            game.move();
-        }
+       
+
+        const nextPosition = snake.getNextPosition();
+        snake.setDirection(direction);
+        game.move();
 
         
     },
@@ -172,6 +170,7 @@ const game = {
             /* устанавливаем следующую позицию змейки с вторым параметром "не удалять хвост змейки",
              * змейка съев еду вырастает на одну клетку */
             snake.setPosition(nextPosition, false);
+            game.changeDirection('keydown');
 
             /* удаляем еду с поля */
             food.removeItem(foundFood);
@@ -179,13 +178,18 @@ const game = {
             /* генерируем новую еду на поле */
             food.generateItem();
 
+            
+
             /* перерендериваем еду */
             food.render();
 
             game.increasePoints();
+
+            
         } else {
             /* если индекс не найден, то просто устанавливаем новую координату для змейки */
             snake.setPosition(nextPosition);
+            game.changeDirection('keydown');
         }
         /* перерендериваем змейку */
         snake.render();
@@ -260,7 +264,7 @@ const cells = {
     /**
      * Функция ищет HTML элементы клеток на странице.
      *
-     * @returns { HTMLCollectionOf.<Element>} Возвращает набор HTML элементов.
+     * @returns { HTMLCol lectionOf.<Element>} Возвращает набор HTML элементов.
      */
     getElements() {
         return document.getElementsByClassName('cell');
@@ -338,9 +342,7 @@ const snake = {
          * например, змейка ползет вправо, а пользователь нажал стрелку влево */
         /* обратить внимание, как сделать красивее и сократить условие */
         if (this.direction === SNAKE_DIRECTION_UP && direction === SNAKE_DIRECTION_DOWN
-            || this.direction === SNAKE_DIRECTION_DOWN && direction === SNAKE_DIRECTION_UP
-            || this.direction === SNAKE_DIRECTION_LEFT && direction === SNAKE_DIRECTION_RIGHT
-            || this.direction === SNAKE_DIRECTION_RIGHT && direction === SNAKE_DIRECTION_LEFT) {
+            || this.direction === SNAKE_DIRECTION_LEFT && direction === SNAKE_DIRECTION_RIGHT) {
             return;
         }
 
@@ -351,7 +353,7 @@ const snake = {
      * Функция считает следующую позицию головы змейки,
      * в зависимости от текущего направления.
      *
-     * @returns {{top: number, left: number}} Возвращает объект с координатами.
+     * @returns {{top: number, left: number}} Возвращает объект с коорди натами.
      */
     getNextPosition() {
         /* получаем позицию головы змейки */
@@ -511,11 +513,13 @@ function init() {
     const startButton = document.getElementById('button-start');
     const pauseButton = document.getElementById('button-pause');
     const stopButton = document.getElementById('button-stop');
+    const continueButton = document.getElementById('button-continue');
 
     /* добавляем обработчики клика на кнопки */
     startButton.addEventListener('click', game.start);
     pauseButton.addEventListener('click', game.pause);
     stopButton.addEventListener('click', game.stop);
+    continueButton.addEventListener('click', game.continue);
 
     /* добавляем обработчик при нажатии на любую кнопку на клавиатуре,
      * далее в методе мы будем проверять нужную нам клавишу */

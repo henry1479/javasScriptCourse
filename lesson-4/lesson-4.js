@@ -6,13 +6,13 @@
 
 function getDigitalRank() {
     output = document.getElementById('digRank');
-    number = prompt('Введите число 0 до 999: ');
+    number = +prompt('Введите число 0 до 999: ');
     obj = {
         100: '',
         10: '',
         1: '',
     };
-    if (number.length > 3) {
+    if (number.length > 3 ) {
         alert('Ваше число не трехзначное!')
         message = `Разрядность числа ${number} составит сотни: ${obj[100]} десятки: ${obj[10]} единицы: ${obj[1]} `;
         output.innerHTML = message;

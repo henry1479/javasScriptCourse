@@ -53,6 +53,10 @@ html, body {
     border-color: rgb(233, 6, 6);
 }
 
+.game.continue .board {
+    border-color: rgb(82, 205, 50);
+}
+
 .end-message {
     position: absolute;
     color: red;
@@ -99,6 +103,19 @@ html, body {
 .buttons button.pause:active {
     border-color: rgba(233, 158, 6, 0.8);
     color: rgba(233, 158, 6, 0.8);
+}
+
+.buttons button.continue {
+    border-color: rgb(82, 205, 50);
+    color: rgb(82, 205, 50);
+}
+.buttons button.continue:hover {
+    border-color: rgba(82, 205, 50, 0.5);
+    color: rgba(82, 205, 50, 0.5);
+}
+.buttons button.continue:active {
+    border-color: rgba(82, 205, 50, 0.8);
+    color: rgba(82, 205, 50, 0.8);
 }
 
 .buttons button.stop {
